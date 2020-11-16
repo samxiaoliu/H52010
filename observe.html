@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<button id="btn">张三订阅事件A</button>
+<button id="btn2">李四订阅事件B</button>
+<button id="btn3">给事件A的订阅者们发布消息</button>
+<button id="btn4">给事件B的订阅者们发布消息</button>
+<button id="btn5">给张三取关</button>
+
+<body>
+
+    <script src="observe.js"></script>
+    <script>
+        var ob = new Observe()
+        console.log(ob)
+        btn.onclick = function() {
+            ob.subscript('A', {
+                张三: function(data) {
+                    console.log('张三收到消息: ' + data)
+                }
+            })
+            ob.subscript('A', {
+                李四: function(data) {
+                    console.log('李四收到消息: ' + data)
+                }
+            })
+            console.log(ob.cachelist)
+        }
+
+        btn2.onclick = function() {
+            ob.subscript('B', {
+                李四: function(data) {
+                    console.log('李四收到消息: ' + data)
+                }
+            })
+            console.log(ob.cachelist)
+        }
+
+        btn3.onclick = function() {
+            ob.publish('A', '感谢你订阅了')
+        }
+
+        btn4.onclick = function() {
+            ob.publish('B', '感谢你订阅了')
+        }
+
+        btn5.onclick = function() {
+            ob.unsubsript('A', '张三')
+            console.log(ob.cachelist)
+        }
+    </script>
+</body>
+
+</html>
